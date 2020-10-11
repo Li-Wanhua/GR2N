@@ -7,7 +7,7 @@ If you find our work useful in your research, please consider citing:
 @inproceedings{li2020graph,
   title={Graph-Based Social Relation Reasoning},
   author={Li, Wanhua and Duan, Yueqi and Lu, Jiwen and Feng, Jianjiang and Zhou, Jie},
-  journal={ECCV},
+  booktitle={ECCV},
   year={2020}
 }
 ```
