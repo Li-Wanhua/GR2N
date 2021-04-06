@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+<head>
+<title>Graph-Based Social Relation Reasoning</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+<style>
+  .container_2{
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+.video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+  .collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+  }
+
+  .active, .collapsible:hover {
+    background-color: #555;
+  }
+  
+  .content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+  }
+</style>
+
+<style>
+.paperthumb {
+  float:left; width: 120px; margin: 3px 10px 7px 0;
+}
+.paperdesc {
+  clear: both;
+}
+</style>
+</head>
+
+<body class="nd-docs">
+<div class="nd-pageheader">
+ <div class="container">
+ <p class="lead" style="font-size:30px">
+    <b><a href="https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123600018.pdf">Graph-Based Social Relation Reasoning</a></b>
+  <address style="font-size: 110%;">
+    <nobr><a href="https://li-wanhua.github.io/">Wanhua Li</a><sup>1</sup>,</nobr>
+    <nobr><a href="https://geometry.stanford.edu/person.php?id=duanyq19">Yueqi Duan</a><sup>2</sup>,</nobr>
+    <nobr><a href="http://ivg.au.tsinghua.edu.cn/Jiwen_Lu/">Jiwen Lu</a><sup>1</sup>,</nobr>
+    <nobr>Jianjiang Feng<sup>1</sup>,</nobr>
+    <nobr>Jie Zhou<sup>2</sup>,</nobr>
+  <br>
+      <nobr><sup>1</sup>Tsinghua University,</nobr>
+      <nobr><sup>2</sup>Stanford University</nobr>
+  </address>
+   <div>European Conference on Computer Vision (ECCV), 2020</div>
+ </div>
+ </p>
+ </div>
+</div> <!-- end nd-pageheader -->
+
+<div class="container">
+
+<div class="row">
+<div class="col text-center">
+<p>
+ <a href="https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123600018.pdf" class="d-inline-block p-3 align-top"><img height="100" width="78" src="images/paper_thumb.png" style="border:1px solid" data-nothumb><br>ECCV Paper</a>
+ <a href="https://arxiv.org/abs/2007.07453" class="d-inline-block p-3 align-top"><img height="100" width="78"  src="images/paper_supp.png" style="border:1px solid" data-nothumb><br>Supplementary</a>
+  <a href="https://github.com/Li-Wanhua/GR2N" class="d-inline-block p-3 align-top"><img height="100" width="78" src="images/github.png" style="border:1px solid" data-nothumb><br>Github Code</a>
+ <a href="https://www.youtube.com/watch?v=zCTPRxxlZsI&t=427s" class="d-inline-block p-3 align-top"><img height="100" width="78" src="images/Video.png" style="border:1px solid" data-nothumb><br>Video</a>
+ </div>
+</div>
+
+
+
+
+
+<h2>Abstract</h2><hr>
+<p>
+Human beings are fundamentally sociable -- that we generally organize our social lives in terms of relations with other people. 
+Understanding social relations from an image has great potential for intelligent systems such as social chatbots and personal assistants. 
+In this paper, we propose a simpler, faster, and more accurate method named graph relational reasoning network (GR<sup>2</sup>N) for social relation recognition. 
+Different from existing methods which process all social relations on an image independently, our method considers the paradigm of jointly inferring the relations by constructing a social relation graph. 
+Furthermore, the proposed GR<sup>2</sup>N constructs several virtual relation graphs to explicitly grasp the strong logical constraints among different types of social relations. Experimental results illustrate that our method generates a reasonable and consistent social relation graph and improves the performance in both accuracy and efficiency.
+</p>
+
+
+<h2>Motivation</h2><hr>
+
+<p align="center">
+    <img src="images/motivation.png" width="80%">
+</p>
+<p>
+In a social scene, there are usually many people appearing at the same time, which contains various social relations. Most existing methods recognize social
+relations between person pairs separately, where each forward pass only processes a pair of bounding boxes on an image. However, as social relations usually form a reasonable social scene, they are not independent of each other,
+but highly correlated instead. Independently predicting the relations on the same
+image suffers from the high locality in social scenes, which may result in an
+unreasonable and contradictory social relation graph. To this end, we consider
+that jointly inferring all relations for each image helps construct a reasonable
+and consistent social relation graph with a thorough understanding of the social
+scene. Moreover, as social relations on the same image usually follow strong
+logical constraints, simultaneously considering all relations can effectively exploit
+the consistency of them. Two examples are shown above. In the first example,
+when we know that the relation between A and C is mother-child and that
+between B and C is father-child, we easily infer that A and B are lovers. In
+the second example, we can quickly understand the social scene through the
+relations among A, B, and C, and infer the relations between D and others, even
+if D is heavily occluded. Clearly, the relations on the same image help each other
+in reasoning, which is not exploited in existing methods as an important cue</p>
+
+
+<h2>Overview</h2><hr>
+<p align="center">
+    <img src="images/overview.png" width="70%">
+</p>
+<p>An overall pipeline of our proposed method. For a given image, we first use a
+CNN to extract features. Then the features of people in the image are obtained from the
+last shared feature map using an RoI pooling layer. These features are set as the initial
+node embeddings. Several virtual relation graphs with shared node representations are
+constructed to exploit type-specific logical constraints. Finally, the proposed GR<sup>2</sup>N is
+used to generate a reasonable and consistent social relation graph.</p>
+
+
+
+<h2>Introduction Video</h2><hr>
+<p align="center">
+<iframe width="800" height="450" src="https://www.youtube.com/embed/zCTPRxxlZsI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</p>
+
+
+
+
+
+<p style="clear:both;">
+<div class="card">
+<h3 class="card-header">Citation</h3>
+<div class="card-block">
+<div class="card-text clickselect">
+  Wanhua Li, Yueqi Duan, Jiwen Lu, Jianjiang Feng, and Jie Zhou, <em>Graph-Based Social Relation Reasoning.</em> European Conference on Computer Vision (ECCV), 2020.
+</div>
+</div>
+</div>
+</p>
+
+<p>
+<div class="card">
+<h3 class="card-header">Bibtex</h3>
+<div class="card-block">
+<pre class="card-text clickselect">
+@inproceedings{li2020social,
+  title={Graph-Based Social Relation Reasoning},
+  author={Li, Wanhua and Duan, Yueqi and Lu, Jiwen and Feng, Jianjiang and Zhou, Jie},
+  booktitle={European Conference on Computer Vision},
+  pages={18--34},
+  year={2020},
+  organization={Springer}
+}
+</pre>
+</div>
+</div>
+</p>
+
+
+<p align="right">
+     <a href="https://hanlab.mit.edu/projects/anycost-gan/">Website Template</a>
+</p>
+
+</div>
+</div> <!-- row -->
+
+</div> <!-- container -->
+
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+  
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.maxHeight){
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = content.scrollHeight * 50+ "px";
+      } 
+      content.style.height = "550%";
+    });
+  }
+</script>
+
+</body>
+</html>
+
+
